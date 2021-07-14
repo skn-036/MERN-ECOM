@@ -1,21 +1,45 @@
+import { Link } from 'react-router-dom'
 import {FaTimes} from 'react-icons/fa'
+
 const CartItem = ({ item }) => {
+
+    // an array of increament 1 upto count of stock
+    const stockArray = (stock) => {
+        let output = [];
+        for(let i = 1; i <= stock; i++) {
+            output.push(i)
+        }
+        return output;
+    }
+
+    //update cart Quantity
+    const changeQty = (e) => {
+        if(e === undefined) {
+            return item.qty;
+        }
+        console.log(e.target.value)
+        return e.target.value;
+    }
+
     return (
         <div className="w-full bg-white py-2 px-2 flex flex-row border-b-4 border-gray-200">
             <div className="w-1/12 sm:w-2/12 flex">
-                <img src={item.imageUrl} alt={item.name} className="rounded-sm h-6 sm:h-12 w-6 sm:w-12 m-auto"/>
+                <Link to={`/products/${item._id}`} className="block text-center">
+                    <img src={item.imageUrl} alt={item.name} className="rounded-sm h-6 sm:h-12 w-6 sm:w-12 m-auto"/>
+                </Link>
             </div>
             <div className="w-6/12 sm:w-5/12 flex">
                 <div className=" text-sm sm:text-xl font-bold my-auto">{item.name}</div>
             </div>
             <div className="w-2/12 flex">
-                <div className="text-sm sm:text-base font-bold my-auto">${item.price}</div>
+                <div className="text-sm sm:text-base font-bold my-auto">${item.price * item.qty}</div>
             </div>
             <div className="w-2/12 flex">
-                <select className="font-bold my-auto w-10/12 sm:w-3/5 border-2 border-gray-400 focus:outline-none rounded-sm">
-                    <option value="1" defaultValue>1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
+                <select className="font-bold my-auto w-10/12 sm:w-3/5 border-2 border-gray-400 focus:outline-none rounded-sm"
+                value={changeQty()} onChange={changeQty}>
+                    {stockArray(item.countInStock).map((x, index) => 
+                        <option value={x} key={index}>{x}</option>
+                    )}
                 </select>
             </div>
             <div className="w-1/12 flex">

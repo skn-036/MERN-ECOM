@@ -1,7 +1,7 @@
 import * as actions from '../constants/cartConstants'
 
-const cartReducer = (state = { cartItems : [] }, action ) => {
-
+const cart = JSON.parse(localStorage.getItem('cartItems')) ? JSON.parse(localStorage.getItem('cartItems')) : [];
+const cartReducer = (state = { cartItems : cart }, action ) => {
 
     switch(action.type) {
         case actions.add_to_cart:

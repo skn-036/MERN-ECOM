@@ -4,7 +4,9 @@ import { useDispatch } from 'react-redux';
 //actions
 import { addToCart } from '../../redux/actions/cartActions';
 
-const ProductCart = ({ product }) => {
+const ProductCart = ({ product, cart }) => {
+    
+    //set product quantity
     const [qty, setQty] = useState(1);
     const getQty = (e) => setQty(e.target.value);
 
@@ -20,13 +22,14 @@ const ProductCart = ({ product }) => {
         return output;
     }
 
+    //calling addToCart Redux Action
     const dispatch = useDispatch();
-
     const cartAdd = () => {
         dispatch(addToCart(product._id, qty));
     }
 
-    
+    //whether this item is in cart
+    const isCart = () => cart.filter((x) => x._id === product._id);
 
     return (
         <div>
@@ -56,9 +59,10 @@ const ProductCart = ({ product }) => {
                 <div className="py-12 md:py-10 lg:py-12 px-3">
                     {(product.countInStock > 0) 
                     ?
-                    <button onClick={cartAdd}
-                    className="w-full py-2 bg-gray-800 text-white hover:bg-gray-900 rounded-sm cursor-pointer">
-                        Add to Cart
+                    <button onClick={isCart().length > 0 && cartAdd}
+                    className={`w-full py-2 bg-gray-800 text-white hover:bg-gray-900 rounded-sm cursor-pointer
+                     ${isCart().length > 0 && 'text-primary cursor-not-allowed'}`}>
+                        {isCart().length > 0 ? 'Already in Cart' : 'Add to Cart'}
                     </button> 
                     :
                     <button 
