@@ -19,6 +19,12 @@ const ProductScreen = () => {
         dispatch(getProductDetails(id));    
     },[dispatch, id]);
 
+    const cart4mRedux = useSelector( state => state.cart.cartItems);
+    const localCart = JSON.parse(localStorage.getItem('cartItems'));
+    const cart4mLocal = (localCart !== undefined && localCart !== null ) ? localCart : [];
+
+    const cartItems = () => (cart4mRedux.length > 0) ? cart4mRedux : cart4mLocal;
+
     if(error) {
         return (
             <div className="screen-min-height w-full flex">
@@ -69,7 +75,7 @@ const ProductScreen = () => {
                 </div>
                 <div className="w-full sm:w-5/12 md:w-3/12">
                     <div className="m-2">
-                        <ProductCart product={product}/>
+                        <ProductCart product={product} cart={cartItems()}/>
                     </div>
                 </div>
             </div>
