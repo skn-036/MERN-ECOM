@@ -54,10 +54,18 @@ const ProductCart = ({ product }) => {
                     </select>
                 </div>
                 <div className="py-12 md:py-10 lg:py-12 px-3">
+                    {(product.countInStock > 0) 
+                    ?
                     <button onClick={cartAdd}
                     className="w-full py-2 bg-gray-800 text-white hover:bg-gray-900 rounded-sm cursor-pointer">
                         Add to Cart
+                    </button> 
+                    :
+                    <button 
+                    className="w-full py-2 bg-gray-300 text-white cursor-not-allowed rounded-sm">
+                        Out of Stock
                     </button>
+                    }
                 </div>
             </div>           
         </div>
