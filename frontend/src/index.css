@@ -1,0 +1,60 @@
+/* ./src/index.css */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+  .general {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+  }
+  .h-max-content {
+    height : max-content;
+  }
+
+  @variants responsive {
+    .w-1by4-mx-1 {
+      width : calc(25% - 8px);
+    }
+    .w-1by3-mx-1 {
+      width : calc(33.33% - 8px);
+    }
+    .w-1by2-mx-1 {
+      width : calc(50% - 8px);
+    }
+    .w-1by1-mx-1 {
+      width : calc(100% - 8px);
+    }
+    .w-inherit {
+      width : inherit;
+    }
+  }
+
+  @variants hover, focus, group-hover {
+    .text-primary {
+      color: rgba(219, 39, 119, 1);
+    }
+    .bg-primary {
+      background: rgba(219, 39, 119, 1);
+    }
+    .backdrop {
+      background : rgba(0, 0, 0, .3);
+    }
+    .transition-sm {
+      transition: all .4s ease-out;
+    }
+    .left-minus-full {
+      left: -100%;
+    }
+    .transform-x-minus-full {
+      transform: translateX(-100%);
+    }
+    .transform-x-minus-full.transform-x-0 {
+      transform: translateX(0);
+    }
+    .screen-min-height {
+      min-height : calc(100vh - 4rem);
+    }
+  }
+}
