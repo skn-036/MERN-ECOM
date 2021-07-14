@@ -7,13 +7,14 @@ const getProducts = () => async (dispatch, getState) => {
             type : actions.get_products_request
         }); 
     
-        const response = await axios.get('/api/products');
+        const response = await axios.get('/api/products/');
         dispatch({
             type : actions.get_products_success,
             payload : response.data
         });
         localStorage.setItem('products', JSON.stringify(getState().products.products));
     } catch (error) {
+        console.log(error)
         dispatch({
             type : actions.get_products_fail, 
             payload : error.response && error.response.data.message ? error.response.data.message : error.message

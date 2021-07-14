@@ -1,32 +1,28 @@
 import * as actions from '../constants/cartConstants'
 
-const cartReducer = (state = { cartitems : [], cartNotifications : [] }, action ) => {
-    const existsInCart = state.cartitems.find((x) => x._id === action.payload._id);
-    const payload = action.payload;
+const cartReducer = (state = { cartItems : [] }, action ) => {
+
 
     switch(action.type) {
         case actions.add_to_cart:
+            const existsInCart = state.cartItems.find((x) => x._id === action.payload._id);
+
             if(existsInCart) {
+                const filtered = state.cartItems.map((x) => {
+                    if(x._id === existsInCart._id) {
+                        x.qty = action.payload.qty;
+                    }
+                    return x;
+                });
                 return {
-                    ...state, 
-                    cartNotifications : [
-                        {
-                            type : 'error',
-                            message : 'Item already exists in cart'
-                        }
-                    ]
-                };
+                    ...state,
+                    cartItems : filtered,
+                }
             }
             else {
                 return {
                     ...state, 
-                    cartItems : [...state.cartItems, payload],
-                    cartNotifications : [
-                        {
-                            type : 'success',
-                            message : 'Item added successfully to cart'
-                        }
-                    ]
+                    cartItems : [...state.cartItems, action.payload],
                 };
             }
         
