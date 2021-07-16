@@ -11,7 +11,16 @@ const addToCart = (id, qty) => async (dispatch, getState) => {
         payload : data,
     });
 
-    localStorage.setItem('cartItems', JSON.stringify(getState().cart.cartItems))
+    sessionStorage.setItem('cartItems', JSON.stringify(getState().cart.cartItems))
+}
+
+const updateCart = (cartItem) => (dispatch, getState) => {
+    dispatch({
+        type: actions.update_cart_qty,
+        payload : cartItem,
+    });
+
+    sessionStorage.setItem('cartItems', JSON.stringify(getState().cart.cartItems))
 }
 
 const removeFromCart = (id) => (dispatch, getState) => {
@@ -20,18 +29,17 @@ const removeFromCart = (id) => (dispatch, getState) => {
         payload : id,
     });
 
-    localStorage.setItem('cartItems', JSON.stringify(getState.cart.cartItems));
+    sessionStorage.setItem('cartItems', JSON.stringify(getState().cart.cartItems));
 }
 
 const resetCart = () => (dispatch, getState) => {
     dispatch({
         type : actions.cart_reset,
-        payload : [],
     });
 
-    localStorage.setItem('cartItems', JSON.stringify(getState().cart.cartItems));
+    sessionStorage.setItem('cartItems', JSON.stringify(getState().cart.cartItems));
 }
 
 export {
-    addToCart, removeFromCart, resetCart
+    addToCart, updateCart, removeFromCart, resetCart,
 }

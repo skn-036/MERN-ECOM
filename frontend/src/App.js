@@ -26,17 +26,17 @@ return (
             <SideDrawer onToggle={toggleSidedrawer} side={sideDrawer} />
             {/** Backdrop */}
             <Backdrop onToggle={toggleSidedrawer} side={sideDrawer}/>
-
-            <Switch>
-                <div className="bg-gray-100 screen-min-height w-full">
+            
+            <div className="bg-gray-100 screen-min-height w-full">
+                <Switch>
                     {/** HomeScreen */}
                     <Route exact path="/" component={HomeScreen}></Route>
                     {/** Product Screen */}
                     <Route path="/products/:id" component={ProductScreen}></Route>
                     {/** Cart Screen */}
                     <Route path="/cart" component={CartScreen}></Route>
-                </div>
-            </Switch>
+                </Switch>
+            </div>
         </Router>
     </>
     );
