@@ -20,10 +20,10 @@ const ProductScreen = () => {
     },[dispatch, id]);
 
     const cart4mRedux = useSelector( state => state.cart.cartItems);
-    const localCart = JSON.parse(localStorage.getItem('cartItems'));
-    const cart4mLocal = (localCart !== undefined && localCart !== null ) ? localCart : [];
+    const sessionCart = JSON.parse(sessionStorage.getItem('cartItems'));
+    const cart4mSession = (sessionCart === undefined || sessionCart == null ) ? [] : sessionCart;
 
-    const cartItems = () => (cart4mRedux.length > 0) ? cart4mRedux : cart4mLocal;
+    const cartItems = () => (cart4mRedux.length > 0) ? cart4mRedux : cart4mSession;
 
     if(error) {
         return (

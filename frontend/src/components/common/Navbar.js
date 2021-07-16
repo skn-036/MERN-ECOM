@@ -1,7 +1,16 @@
 import { FaShoppingCart, FaTimes } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 
+import { useSelector } from 'react-redux';
+
 const Navbar = ({ onToggle, side }) => {
+    const cart4mRedux = useSelector(state => state.cart.cartItems);
+    const sessionCart = JSON.parse(sessionStorage.getItem('cartItems'));
+    const cart4mSession = (sessionCart !== undefined && sessionCart !== null ) ? sessionCart : [];
+
+    //set cartitems if redux output available else from session storage
+    const cartItems = () => (cart4mRedux.length > 0) ? cart4mRedux : cart4mSession;
+
     return (
         <>
         <div className="w-full bg-gray-900 h-16 px-3 sm:px-8">
@@ -18,7 +27,10 @@ const Navbar = ({ onToggle, side }) => {
                     <li className="cart flex flex-row cursor-pointer mx-1 sm:mx-2">
                         <Link to="/cart"  className="my-auto text-2xl mx-1 hover:text-primary"><FaShoppingCart /></Link>
                         <div className="my-auto">
-                            <span className="font-bold p-0 m-0 tracking-tighter">1 items</span>
+                            <span className="font-bold p-0 m-0 tracking-tighter">
+                                {cartItems().length > 1 ? 
+                                `${cartItems().length} products` : `${cartItems().length} product`}
+                            </span>
                         </div>
                     </li>
                 </ul>

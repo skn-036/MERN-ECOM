@@ -1,6 +1,6 @@
 import * as actions from '../constants/cartConstants'
 
-const cart = JSON.parse(localStorage.getItem('cartItems')) ? JSON.parse(localStorage.getItem('cartItems')) : [];
+const cart = JSON.parse(sessionStorage.getItem('cartItems')) ? JSON.parse(sessionStorage.getItem('cartItems')) : [];
 const cartReducer = (state = { cartItems : cart }, action ) => {
 
     switch(action.type) {
@@ -8,7 +8,7 @@ const cartReducer = (state = { cartItems : cart }, action ) => {
             const existsInCart = state.cartItems.find((x) => x._id === action.payload._id);
 
             if(existsInCart) {
-                const filtered = state.cartItems.map((x) => {
+                const updateQty = state.cartItems.map((x) => {
                     if(x._id === existsInCart._id) {
                         x.qty = action.payload.qty;
                     }
@@ -16,7 +16,7 @@ const cartReducer = (state = { cartItems : cart }, action ) => {
                 });
                 return {
                     ...state,
-                    cartItems : filtered,
+                    cartItems : updateQty
                 }
             }
             else {
@@ -24,6 +24,18 @@ const cartReducer = (state = { cartItems : cart }, action ) => {
                     ...state, 
                     cartItems : [...state.cartItems, action.payload],
                 };
+            }
+
+        case actions.update_cart_qty:
+            const updateQty = state.cartItems.map((x) => {
+                if(x._id === action.payload._id) {
+                    x.qty = action.payload.qty;
+                }
+                return x;
+            });
+            return {
+                ...state, 
+                cartItems : updateQty
             }
         
         case actions.remove_from_cart:

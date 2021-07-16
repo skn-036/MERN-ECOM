@@ -1,5 +1,9 @@
-import { Link } from 'react-router-dom'
-import {FaTimes} from 'react-icons/fa'
+import { useDispatch } from 'react-redux';
+import { Link } from 'react-router-dom';
+import {FaTimes} from 'react-icons/fa';
+
+//actions
+import { updateCart, removeFromCart } from '../../redux/actions/cartActions';
 
 const CartItem = ({ item }) => {
 
@@ -13,13 +17,18 @@ const CartItem = ({ item }) => {
     }
 
     //update cart Quantity
+    const dispatch = useDispatch();
     const changeQty = (e) => {
-        if(e === undefined) {
-            return item.qty;
-        }
-        console.log(e.target.value)
-        return e.target.value;
+        item.qty = e.target.value;
+        dispatch(updateCart(item))
     }
+
+    //remove from cart
+    const removeCart = () => {
+        dispatch(removeFromCart(item._id))
+    }
+
+
 
     return (
         <div className="w-full bg-white py-2 px-2 flex flex-row border-b-4 border-gray-200">
@@ -36,7 +45,7 @@ const CartItem = ({ item }) => {
             </div>
             <div className="w-2/12 flex">
                 <select className="font-bold my-auto w-10/12 sm:w-3/5 border-2 border-gray-400 focus:outline-none rounded-sm"
-                value={changeQty()} onChange={changeQty}>
+                defaultValue={item.qty} onChange={changeQty}>
                     {stockArray(item.countInStock).map((x, index) => 
                         <option value={x} key={index}>{x}</option>
                     )}
@@ -44,7 +53,7 @@ const CartItem = ({ item }) => {
             </div>
             <div className="w-1/12 flex">
                 <div className="font-bold my-auto cursor-pointer p-1 border border-gray-300 
-                rounded-sm hover:text-primary"><FaTimes /></div>
+                rounded-sm hover:text-primary"><FaTimes onClick={ removeCart }/></div>
             </div>
         </div>
     )
